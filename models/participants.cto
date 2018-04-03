@@ -1,0 +1,82 @@
+/**
+ * Write your model definitions here
+ */
+
+namespace org.bjitgroup.com.participant
+
+abstract participant Person identified by id {
+  o String id
+  o String firstName
+  o String lastName
+}
+
+participant Student extends Person {
+  --> Certificate[] certificate optional
+  --> Course[] course optional
+}
+
+participant Instructor extends Person {
+}
+
+participant Organization identified by id {
+  o String id
+  o String name
+  --> RegistryBook registryBook
+}
+
+concept Exam {
+  o Integer	totalMark
+  o Double	obtainedMark
+  o Boolean	isFinished 
+}
+
+concept CourseDetails {
+  o String	name
+  o String	description
+}
+
+asset Certificate identified by id {
+  o String id
+  o Double	mark
+  o Boolean	isAssign
+  --> Organization	organization
+  --> Course	course
+}
+
+asset Course identified by code {
+  o String code
+  o CourseDetails	courseDetails
+  --> Organization	organization
+  --> Instructor	instructor
+}
+
+asset ExamEvalution identified by id {
+  o String id
+  o Boolean	isUsedForCertificate
+  o Exam exam
+  --> Course course
+  --> Instructor instructor
+  --> Student student
+}
+
+asset RegistryBook identified by id {
+  o String id
+  --> Organization organization optional
+  --> ExamEvalution[] results optional
+}
+
+transaction AssignCertificate {
+  --> Organization byOrganization
+  --> Student toStudent
+  --> Certificate certifate
+}
+
+transaction EnrollCourse {
+  --> Student student
+  --> Course course
+}
+
+transaction EvaluteExam {
+  --> ExamEvalution	examEvalution
+  o Double	mark
+}
