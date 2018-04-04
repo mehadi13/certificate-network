@@ -1,9 +1,9 @@
-namespace model.transaction
+namespace project.transaction
 
-import model.participant.Student
-import model.asset.Certificate
-import model.asset.ExamEvalution
-import model.asset.Course
+import project.asset.ExamEvalution
+import project.asset.Certificate
+import project.asset.Course
+import project.participant.Student
 
 transaction AssignCertificate {
   --> Student toStudent

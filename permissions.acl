@@ -1,8 +1,76 @@
-rule SampleConditionalRule {
-    description: "Description of the ACL rule"
-    participant(m): "org.bjitgroup.com.participant.*"
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
-    resource(v): "org.bjitgroup.com.participant.*"
-    condition: (v.owner.getIdentifier() == m.getIdentifier())
+    resource: "**"
     action: ALLOW
 }
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule AllCanRead {
+    description: "All have access to read system resources"
+    participant: "ANY"
+    operation: READ
+    resource: "**"
+    action: ALLOW
+}
+
+rule AllCanCreateHistory{
+  description: "All have access to read system resources"
+  participant: "ANY"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.HistorianRecord" 
+  action: ALLOW
+}
+
+rule CreateAsset{
+  description: "All have access to read system resources"
+  participant: "project.participant.Organization"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.AddAsset" 
+  action: ALLOW
+}
+
+rule EvaluteExamTransactionAccessToInstructor {
+    description: "All have access to read system resources"
+    participant: "project.participant.Instructor"
+    operation: CREATE
+    resource: "project.transaction.EvaluteExam"
+    action: ALLOW
+}
+
+rule InstructorUpdateResultInRegister {
+    description: "All have access to read system resources"
+    participant: "project.participant.Instructor"
+    operation: UPDATE
+    resource: "project.asset.RegistryBook"
+    action: ALLOW
+}
+
+rule ConditionToEvaluteExam {
+    description: "Exam evalution only conduct by the Instructor, who is already assign. Instructor can read and update exam evalution"
+    participant(m): "project.participant.Instructor"
+    operation: UPDATE
+    resource(v): "project.asset.ExamEvalution"
+    transaction(tx): "project.transaction.EvaluteExam"
+    condition: (v.instructor.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+}
+
+rule ConditionToCreateCourse {
+    description: ""
+    participant(m): "project.participant.Organization"
+    operation: CREATE,UPDATE
+    resource(v): "project.asset.Course"
+    condition: (v.organization.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+}
+
+

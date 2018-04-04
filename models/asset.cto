@@ -1,7 +1,8 @@
-namespace model.assets
-import model.participant.Student
-import model.participant.Instructor
-import model.participant.Organization
+namespace project.asset
+
+import project.participant.Student
+import project.participant.Organization
+import project.participant.Instructor
 
 concept Exam {
   o Integer	totalMark
@@ -49,4 +50,3 @@ asset StudentFile identified by id {
   --> Certificate[]	certificates optional
   --> Course[]	courses optional
 }
-

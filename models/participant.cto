@@ -2,9 +2,10 @@
  * Write your model definitions here
  */
 
-namespace model.participant
-import model.asset.StudentFile
-import model.asset.RegistryBook
+namespace project.participant
+
+import project.asset.StudentFile
+import project.asset.RegistryBook
 
 abstract participant Person identified by id {
   o String id
