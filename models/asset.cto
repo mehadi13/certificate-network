@@ -1,0 +1,52 @@
+namespace model.assets
+import model.participant.Student
+import model.participant.Instructor
+import model.participant.Organization
+
+concept Exam {
+  o Integer	totalMark
+  o Double	obtainedMark
+  o Boolean	isExamined 
+}
+
+concept CourseDetails {
+  o String	name
+  o String	description
+}
+
+asset Certificate identified by id {
+  o String id
+  o Boolean	isAssign
+  --> Organization	organization
+  --> ExamEvalution examEvalution optional
+}
+
+asset Course identified by code {
+  o String code
+  o CourseDetails	courseDetails
+  --> Organization	organization
+  --> Instructor	instructor
+}
+
+asset ExamEvalution identified by id {
+  o String id
+  o Boolean	isUsedForCertificate
+  o Exam exam
+  --> Course course
+  --> Instructor instructor
+  --> Student student
+}
+
+asset RegistryBook identified by id {
+  o String id
+  --> Organization organization optional
+  --> ExamEvalution[] results optional
+}
+
+asset StudentFile identified by id {
+  o String id
+  o Boolean	isAllocated
+  --> Certificate[]	certificates optional
+  --> Course[]	courses optional
+}
+

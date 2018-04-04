@@ -1,0 +1,22 @@
+namespace model.transaction
+
+import model.participant.Student
+import model.asset.Certificate
+import model.asset.ExamEvalution
+import model.asset.Course
+
+transaction AssignCertificate {
+  --> Student toStudent
+  --> Certificate certificate
+  --> ExamEvalution examEvalution
+}
+
+transaction EnrollCourse {
+  --> Student student
+  --> Course course
+}
+
+transaction EvaluteExam {
+  --> ExamEvalution	examEvalution
+  o Double	mark
+}
