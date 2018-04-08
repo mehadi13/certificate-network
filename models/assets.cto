@@ -9,15 +9,15 @@ import network.certificate.concepts.CourseDetails
 asset ExamEvalution identified by id {
   o String id
   o Exam exam
-  o Boolean	isExamined
-  o Boolean	isUsedForCertificate
+  o Boolean	isExamined default = false
+  o Boolean	isUsedForCertificate default = false
   o Double obtainedMark
 }
 
 asset Certificate identified by id {
   o String id
   --> ExamEvalution	examEvalution
-  o Boolean	isGiven
+  o Boolean	isGiven default = false
   --> Organization	createdBy
 }
 

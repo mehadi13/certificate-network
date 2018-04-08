@@ -170,11 +170,9 @@
         <thead class="thead">
           <tr class="thead-cols">
             
-                <th class="info">code</th>
+                <th class="info">Course code</th>
             
-                <th class="info">courseDetails</th>
-            
-                <th class="info">organization</th>
+                <th class="info">Course Name</th>
             
               <th class="info-actions">Actions</th>
           </tr>
@@ -184,10 +182,7 @@
 
             
                 <td class="asset-properties">{{asset.code}}</td>
-            
-                <td class="asset-properties">{{asset.courseDetails}}</td>
-            
-                <td class="asset-properties">{{asset.organization}}</td>
+                <td class="asset-properties">{{asset.courseDetails.name}}</td>
             
             <td>
               <button (click)="getForm(asset.code);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateAssetModal">
