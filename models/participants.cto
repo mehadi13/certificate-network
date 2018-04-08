@@ -1,11 +1,7 @@
-/**
- * Write your model definitions here
- */
+namespace network.certificate.participants
 
-namespace project.participant
-
-import project.asset.StudentFile
-import project.asset.RegistryBook
+import network.certificate.assets.Course
+import network.certificate.assets.Certificate
 
 abstract participant Person identified by id {
   o String id
@@ -14,14 +10,13 @@ abstract participant Person identified by id {
 }
 
 participant Student extends Person {
-  --> StudentFile studentFile
+  --> Course[]	enrolledCourses optional
+  --> Certificate[]	certificates optional
 }
 
 participant Instructor extends Person {
 }
-
 participant Organization identified by id {
   o String id
   o String name
-  --> RegistryBook registryBook
 }

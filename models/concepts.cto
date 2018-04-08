@@ -1,0 +1,15 @@
+namespace network.certificate.concepts
+import network.certificate.participants.Instructor
+import network.certificate.participants.Student
+import network.certificate.assets.Course
+concept Exam {
+  o Integer	totalMark
+  --> Course course
+  --> Student student
+}
+
+concept CourseDetails {
+  o String name
+  o String description
+  --> Instructor instructor
+}

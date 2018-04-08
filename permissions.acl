@@ -23,54 +23,103 @@ rule AllCanRead {
 }
 
 rule AllCanCreateHistory{
-  description: "All have access to read system resources"
+  description: "All can participant in transaction"
   participant: "ANY"
   operation: CREATE
   resource: "org.hyperledger.composer.system.HistorianRecord" 
   action: ALLOW
 }
 
-rule CreateAsset{
-  description: "All have access to read system resources"
-  participant: "project.participant.Organization"
+rule OrganizationCreateAsset{
+  description: "Only Organization can create asset"
+  participant: "network.certificate.participants.Organization"
   operation: CREATE
   resource: "org.hyperledger.composer.system.AddAsset" 
   action: ALLOW
 }
 
 rule EvaluteExamTransactionAccessToInstructor {
-    description: "All have access to read system resources"
-    participant: "project.participant.Instructor"
-    operation: CREATE
-    resource: "project.transaction.EvaluteExam"
-    action: ALLOW
-}
-
-rule InstructorUpdateResultInRegister {
-    description: "All have access to read system resources"
-    participant: "project.participant.Instructor"
+    description: "Only Instructor can Evalute Exam"
+  	participant(m): "network.certificate.participants.Instructor"
     operation: UPDATE
-    resource: "project.asset.RegistryBook"
+    resource(ee): "network.certificate.assets.ExamEvalution"
+  transaction(tx): "network.certificate.transactions.EvaluteExam"
+    condition: (
+      function(){
+      return (ee.examEvalution.exam.course.courseDetails.instructor.getIdentifier() == m.getIdentifier() && !ee.examEvalution.isExamined);
+      })
     action: ALLOW
 }
 
-rule ConditionToEvaluteExam {
-    description: "Exam evalution only conduct by the Instructor, who is already assign. Instructor can read and update exam evalution"
-    participant(m): "project.participant.Instructor"
-    operation: UPDATE
-    resource(v): "project.asset.ExamEvalution"
-    transaction(tx): "project.transaction.EvaluteExam"
-    condition: (v.instructor.getIdentifier() == m.getIdentifier())
+rule CreateEvaluteExamToInstructor {
+    description: "Only Instructor can Evalute Exam"
+    participant(m): "network.certificate.participants.Instructor"
+    operation: CREATE,READ
+    resource(v): "network.certificate.transactions.EvaluteExam"
+    condition: (v.examEvalution.exam.course.courseDetails.instructor.getIdentifier()==m.getIdentifier())
     action: ALLOW
 }
 
-rule ConditionToCreateCourse {
-    description: ""
-    participant(m): "project.participant.Organization"
-    operation: CREATE,UPDATE
-    resource(v): "project.asset.Course"
-    condition: (v.organization.getIdentifier() == m.getIdentifier())
+rule UpdateStudentToStudent {
+    description: "Description of the ACL rule"
+    participant(m): "network.certificate.participants.Student"
+    operation: READ, UPDATE
+    resource(v): "network.certificate.participants.Student"
+    condition: (m.getIdentifier() == v.getIdentifier())
     action: ALLOW
 }
 
+rule EnrollCourseAccessToStudent {
+    description: "Provide enroll course access to student"
+    participant(m): "network.certificate.participants.Student"
+    operation: READ, CREATE
+    resource(v): "network.certificate.transactions.EnrollCourse"
+    condition: (m.getIdentifier() == v.student.getIdentifier())
+    action: ALLOW
+}
 
+rule CreateCourseToOrganization {
+    description: "Course only be offered by the Organization"
+    participant(m): "network.certificate.participants.Organization"
+    operation: ALL
+    resource(v): "network.certificate.assets.Course"
+    condition: (v.organization.getIdentifier()==m.getIdentifier())
+    action: ALLOW
+}
+
+rule CreateExamEvalutionToOrganization {
+    description: "Certificate only be assigned by the Organization"
+    participant(m): "network.certificate.participants.Organization"
+    operation: ALL
+    resource(v): "network.certificate.assets.ExamEvalution"
+    condition: (v.exam.course.organization.getIdentifier()==m.getIdentifier())
+    action: ALLOW
+}
+
+rule CreateCertificateToOrganization {
+    description: "Certificate only be assigned by the Organization"
+    participant(m): "network.certificate.participants.Organization"
+    operation: ALL
+    resource(v): "network.certificate.assets.Certificate"
+    condition: (v.createdBy.getIdentifier()==m.getIdentifier())
+    action: ALLOW
+}
+
+rule AssignCertificateByOrganization {
+    description: "AssignCertificate only be assigned by the Organization"
+    participant(m): "network.certificate.participants.Organization"
+    operation: CREATE,READ
+    resource(v): "network.certificate.transactions.AssignCertificate"
+    condition: (m.getIdentifier()==v.certificate.createdBy.getIdentifier())
+    action: ALLOW
+}
+
+rule AssignCertificateByOrganizationToStudent {
+    description: "AssignCertificate only be assigned by the Organization"
+    participant(m): "network.certificate.participants.Organization"
+    operation: UPDATE,READ
+    resource(v): "network.certificate.participants.Student"
+  	transaction(tx): "network.certificate.transactions.AssignCertificate"
+    condition: (m.getIdentifier()==tx.certificate.createdBy.getIdentifier())
+    action: ALLOW
+}

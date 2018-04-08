@@ -1,0 +1,48 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <p class="network-name">certificate-network@0.0.1.bna</p>
+        <p class="navbar-brand">certificate-network-app</p>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown active">
+            <a class="dropdown-toggle" data-toggle="dropdown">Assets</a>
+            <ul class="dropdown-menu scrollable-menu">
+              
+              <li><a [routerLink]="['/ExamEvalution']">ExamEvalution</a></li>
+              
+              <li><a [routerLink]="['/Certificate']">Certificate</a></li>
+              
+              <li><a [routerLink]="['/Course']">Course</a></li>
+              
+            </ul>
+        </li>
+        <li class="dropdown active">
+          <a class="dropdown-toggle" data-toggle="dropdown">Participants</a>
+          <ul class="dropdown-menu scrollable-menu">
+            
+            <li><a [routerLink]="['/Student']">Student</a></li>
+            
+            <li><a [routerLink]="['/Instructor']">Instructor</a></li>
+            
+            <li><a [routerLink]="['/Organization']">Organization</a></li>
+            
+          </ul>
+      </li>
+      <li class="dropdown active">
+        <a class="dropdown-toggle" data-toggle="dropdown">Transactions</a>
+        <ul class="dropdown-menu scrollable-menu">
+          
+          <li><a [routerLink]="['/AssignCertificate']">AssignCertificate</a></li>
+          
+          <li><a [routerLink]="['/EnrollCourse']">EnrollCourse</a></li>
+          
+          <li><a [routerLink]="['/EvaluteExam']">EvaluteExam</a></li>
+          
+        </ul>
+    </li>
+      </ul>
+    </div>
+  </nav>
+  
+  <router-outlet></router-outlet>

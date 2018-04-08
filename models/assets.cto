@@ -1,0 +1,29 @@
+namespace network.certificate.assets
+
+import network.certificate.participants.Organization
+import network.certificate.participants.Instructor
+import network.certificate.participants.Student
+import network.certificate.concepts.Exam
+import network.certificate.concepts.CourseDetails
+
+asset ExamEvalution identified by id {
+  o String id
+  o Exam exam
+  o Boolean	isExamined
+  o Boolean	isUsedForCertificate
+  o Double obtainedMark
+}
+
+asset Certificate identified by id {
+  o String id
+  --> ExamEvalution	examEvalution
+  o Boolean	isGiven
+  --> Organization	createdBy
+}
+
+asset Course identified by code {
+  o String code
+  o CourseDetails	courseDetails
+  --> Organization	organization
+}
+

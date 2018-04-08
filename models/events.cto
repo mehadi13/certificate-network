@@ -1,0 +1,6 @@
+
+namespace network.certificate.events
+
+event ErrorEvent{
+ o String errorMessage 
+}

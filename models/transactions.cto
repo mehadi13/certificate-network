@@ -1,0 +1,22 @@
+namespace network.certificate.transactions
+
+import network.certificate.participants.Student
+import network.certificate.participants.Organization
+import network.certificate.assets.Certificate
+import network.certificate.assets.ExamEvalution
+import network.certificate.assets.Course
+     
+
+transaction AssignCertificate {
+  --> Certificate	certificate
+}
+
+transaction EnrollCourse {
+  --> Student	student
+  --> Course	course
+}
+
+transaction EvaluteExam {
+  --> ExamEvalution	examEvalution
+  o Double	mark
+}
