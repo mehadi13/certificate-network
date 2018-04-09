@@ -34,19 +34,9 @@
 
             
               <div class="form-group text-left">
-                <label for="isExamined">isExamined</label>
+                <!-- <label for="isExamined">isExamined</label> -->
                 
-                  <input formControlName="isExamined" type="checkbox" class="form-control">
-                
-              </div>
-            
-          
-
-            
-              <div class="form-group text-left">
-                <label for="isUsedForCertificate">isUsedForCertificate</label>
-                
-                  <input formControlName="isUsedForCertificate" type="checkbox" class="form-control">
+                  <input formControlName="isExamined" type="hidden" class="form-control" value="false">
                 
               </div>
             
@@ -54,9 +44,19 @@
 
             
               <div class="form-group text-left">
-                <label for="obtainedMark">obtainedMark</label>
+                <!-- <label for="isUsedForCertificate">isUsedForCertificate</label> -->
                 
-                  <input formControlName="obtainedMark" type="number" step='any' class="form-control">
+                  <input formControlName="isUsedForCertificate" type="hidden" class="form-control" value="false">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <!-- <label for="obtainedMark">obtainedMark</label> -->
+                
+                  <input formControlName="obtainedMark" type="hidden" step='any' class="form-control" value="0">
                 
               </div>
             
@@ -186,7 +186,7 @@
   
   <div class="row">
     <div class="col-md-9">
-        <h1 class="asset-title" id='assetName'>ExamEvalution</h1>
+        <h1 class="asset-title" id='assetName'>Exam Evalution</h1>
     </div>
     <div class="col-md-3">
       <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">
@@ -206,15 +206,17 @@
         <thead class="thead">
           <tr class="thead-cols">
             
-                <th class="info">id</th>
+                <th class="info">Id</th>
             
-                <th class="info">exam</th>
+                <th class="info">Total Mark</th>
             
-                <th class="info">isExamined</th>
+                <th class="info">Examined</th>
             
-                <th class="info">isUsedForCertificate</th>
+                <th class="info">Used For Certificate</th>
+
+                <th class="info">Course</th>
             
-                <th class="info">obtainedMark</th>
+                <th class="info">Obtained Mark</th>
             
               <th class="info-actions">Actions</th>
           </tr>
@@ -225,12 +227,14 @@
             
                 <td class="asset-properties">{{asset.id}}</td>
             
-                <td class="asset-properties">{{asset.exam}}</td>
+                <td class="asset-properties">{{asset.exam.totalMark}}</td>
             
                 <td class="asset-properties">{{asset.isExamined}}</td>
             
                 <td class="asset-properties">{{asset.isUsedForCertificate}}</td>
             
+                <td class="asset-properties">{{asset.exam.course}}</td>
+
                 <td class="asset-properties">{{asset.obtainedMark}}</td>
             
             <td>

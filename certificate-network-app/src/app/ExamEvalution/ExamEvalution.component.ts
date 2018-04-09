@@ -21,11 +21,10 @@ export class ExamEvalutionComponent implements OnInit {
       
           id = new FormControl("", Validators.required);
         
-  
       
           exam = new FormControl("", Validators.required);
         
-  
+          
       
           isExamined = new FormControl("", Validators.required);
         
